@@ -6,7 +6,7 @@
     baseurl: "https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable"
     mirrorlist: "https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo"
     gpgcheck: no
-    enabled: yes
+    enabled: true
   tags: all, consul, nomad, terraform, vault
 
 - name: "{{ ansible_distribution }} - Install Consul."

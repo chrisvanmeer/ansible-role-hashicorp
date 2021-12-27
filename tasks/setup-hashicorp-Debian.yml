@@ -13,7 +13,7 @@
 
 - name: "{{ ansible_distribution }} - Ensure that apt is updated."
   apt:
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 3600
   tags: all, consul, nomad, terraform, vault
 
