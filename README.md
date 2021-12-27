@@ -1,4 +1,4 @@
-# Role Name
+# ansible-role-hashicorp
 
 An ansible role to install the following HashiCorp products
 
