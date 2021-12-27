@@ -15,7 +15,7 @@ None.
 
 ## Role Variables
 
-######product_selection
+### product_selection
 This variable can be changed to match your prefference.  
 Defaults to:
 
