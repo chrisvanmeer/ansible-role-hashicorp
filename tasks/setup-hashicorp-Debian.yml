@@ -3,40 +3,37 @@
   apt_key:
     url: https://apt.releases.hashicorp.com/gpg
     state: present
-  tags: all, consul, nomad, terraform, vault
 
 - name: "{{ ansible_distribution }} - Ensure that Hashicorp repository is present."
   apt_repository:
     repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
     state: present
-  tags: all, consul, nomad, terraform, vault
 
 - name: "{{ ansible_distribution }} - Ensure that apt is updated."
   apt:
     update_cache: true
     cache_valid_time: 3600
-  tags: all, consul, nomad, terraform, vault
 
 - name: "{{ ansible_distribution }} - Install Consul."
   apt:
     name: consul
     state: present
-  tags: all, consul
+  when: '"consul" in product_selection'
 
 - name: "{{ ansible_distribution }} - Install Nomad."
   apt:
     name: nomad
     state: present
-  tags: all, nomad
+  when: '"nomad" in product_selection'
 
 - name: "{{ ansible_distribution }} - Install Terraform."
   apt:
     name: terraform
     state: present
-  tags: all, terraform
+  when: '"terraform" in product_selection'
 
 - name: "{{ ansible_distribution }} - Install Vault."
   apt:
     name: vault
     state: present
-  tags: all, vault
+  when: '"vault" in product_selection'

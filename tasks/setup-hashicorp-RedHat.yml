@@ -7,28 +7,27 @@
     mirrorlist: "https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo"
     gpgcheck: false
     enabled: true
-  tags: all, consul, nomad, terraform, vault
 
 - name: "{{ ansible_distribution }} - Install Consul."
   yum:
     name: consul
     state: present
-  tags: all, consul
+  when: '"consul" in product_selection'
 
 - name: "{{ ansible_distribution }} - Install Nomad."
   yum:
     name: nomad
     state: present
-  tags: all, nomad
+  when: '"nomad" in product_selection'
 
 - name: "{{ ansible_distribution }} - Install Terraform."
   yum:
     name: terraform
     state: present
-  tags: all, terraform
+  when: '"terraform" in product_selection'
 
 - name: "{{ ansible_distribution }} - Install Vault."
   yum:
     name: vault
     state: present
-  tags: all, vault
+  when: '"vault" in product_selection'

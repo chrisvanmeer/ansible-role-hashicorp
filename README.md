@@ -15,7 +15,17 @@ None.
 
 ## Role Variables
 
-None.
+######product_selection
+This variable can be changed to match your prefference.  
+Defaults to:
+
+```
+product_selection:
+  - consul
+  - nomad
+  - terraform
+  - vault
+```
 
 ## Dependencies
 
@@ -34,8 +44,16 @@ ansible-galaxy install chrisvanmeer.hashicorp
 ```
 - hosts: servers
   become: true
+
+  vars:
+    product_selection:
+      - consul
+      - nomad
+      - terraform
+      - vault
+
   roles:
-    - { role: chrisvanmeer.hashicorp }
+    - role: chrisvanmeer.hashicorp
 ```
 
 ## License
