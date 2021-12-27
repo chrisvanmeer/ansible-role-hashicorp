@@ -4,7 +4,7 @@ dependencies: []
 galaxy_info:
   role_name: hashicorp
   author: chrisvanmeer
-  description: Apache 2.x for Linux.
+  description: Ansible role for HashiCorp products
   company: "AT Computing"
   license: "license (BSD, MIT)"
   min_ansible_version: 2.4
