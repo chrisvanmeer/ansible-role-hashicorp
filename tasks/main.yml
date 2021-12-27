@@ -1,0 +1,3 @@
+---
+# tasks file for chrisvanmeer.hashicorp-role
+- include_tasks: "{{ hashicorp_task_file }}"

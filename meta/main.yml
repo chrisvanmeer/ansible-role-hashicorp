@@ -1,0 +1,35 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: hashicorp
+  author: chrisvanmeer
+  description: Apache 2.x for Linux.
+  company: "AT Computing"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.4
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: CentOS
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+  galaxy_tags:
+    - cloud
+    - hashicorp
+    - consul
+    - nomad
+    - terraform
+    - vault
+
+allow_duplicates: true

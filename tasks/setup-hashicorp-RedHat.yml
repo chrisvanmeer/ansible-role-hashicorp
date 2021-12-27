@@ -1,0 +1,34 @@
+---
+- name: "{{ ansible_distribution }} - Ensure that Hashicorp repository is present."
+  yum_repository:
+    name: HashiCorp
+    description: HashiCorp Repository
+    baseurl: "https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable"
+    mirrorlist: "https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo"
+    gpgcheck: no
+    enabled: yes
+  tags: all, consul, nomad, terraform, vault
+
+- name: "{{ ansible_distribution }} - Install Consul."
+  yum:
+    name: consul
+    state: present
+  tags: all, consul
+
+- name: "{{ ansible_distribution }} - Install Nomad."
+  yum:
+    name: nomad
+    state: present
+  tags: all, nomad
+
+- name: "{{ ansible_distribution }} - Install Terraform."
+  yum:
+    name: terraform
+    state: present
+  tags: all, terraform
+
+- name: "{{ ansible_distribution }} - Install Vault."
+  yum:
+    name: vault
+    state: present
+  tags: all, vault
