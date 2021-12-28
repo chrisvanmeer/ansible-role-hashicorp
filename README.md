@@ -15,17 +15,29 @@ None.
 
 ## Role Variables
 
-### product_selection
-This variable can be changed to match your prefference.  
-Defaults to:
-
-```
-product_selection:
-  - consul
-  - nomad
-  - terraform
-  - vault
-```
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th width="150px">Default Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr valign="top">
+      <td>product_selection</td>
+      <td>
+        <ul>
+          <li>consul</li>
+          <li>nomad</li>
+          <li>terraform</li>
+          <li>vault</li>
+        </ul>
+      </td>
+      <td>Allows for a subselection of products to be installed. Defaults to the whole suite.</td>
+    </td>
+  </tbody>
+</table>
 
 ## Dependencies
 
