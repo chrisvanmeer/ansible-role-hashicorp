@@ -25,7 +25,7 @@ None.
   </thead>
   <tbody>
     <tr valign="top">
-      <td>product_selection</td>
+      <td>hashicorp_product_selection</td>
       <td>
         <ul>
           <li>consul</li>
@@ -58,7 +58,7 @@ ansible-galaxy install chrisvanmeer.hashicorp
   become: true
 
   vars:
-    product_selection:
+    hashicorp_product_selection:
       - consul
       - nomad
       - terraform

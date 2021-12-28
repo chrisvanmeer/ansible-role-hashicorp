@@ -18,22 +18,22 @@
   apt:
     name: consul
     state: present
-  when: '"consul" in product_selection'
+  when: '"consul" in hashicorp_product_selection'
 
 - name: "{{ ansible_distribution }} - Install Nomad."
   apt:
     name: nomad
     state: present
-  when: '"nomad" in product_selection'
+  when: '"nomad" in hashicorp_product_selection'
 
 - name: "{{ ansible_distribution }} - Install Terraform."
   apt:
     name: terraform
     state: present
-  when: '"terraform" in product_selection'
+  when: '"terraform" in hashicorp_product_selection'
 
 - name: "{{ ansible_distribution }} - Install Vault."
   apt:
     name: vault
     state: present
-  when: '"vault" in product_selection'
+  when: '"vault" in hashicorp_product_selection'

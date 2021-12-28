@@ -1,6 +1,6 @@
 ---
 # defaults file for chrisvanmeer.hashicorp-role
-product_selection:
+hashicorp_product_selection:
   - consul
   - nomad
   - terraform

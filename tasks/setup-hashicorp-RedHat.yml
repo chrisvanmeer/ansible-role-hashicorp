@@ -12,22 +12,22 @@
   yum:
     name: consul
     state: present
-  when: '"consul" in product_selection'
+  when: '"consul" in hashicorp_product_selection'
 
 - name: "{{ ansible_distribution }} - Install Nomad."
   yum:
     name: nomad
     state: present
-  when: '"nomad" in product_selection'
+  when: '"nomad" in hashicorp_product_selection'
 
 - name: "{{ ansible_distribution }} - Install Terraform."
   yum:
     name: terraform
     state: present
-  when: '"terraform" in product_selection'
+  when: '"terraform" in hashicorp_product_selection'
 
 - name: "{{ ansible_distribution }} - Install Vault."
   yum:
     name: vault
     state: present
-  when: '"vault" in product_selection'
+  when: '"vault" in hashicorp_product_selection'
