@@ -2,10 +2,14 @@
 
 An ansible role to install the following HashiCorp products
 
+- Boundary
 - Consul
 - Nomad
+- Packer
 - Terraform
+- Vagrant
 - Vault
+- Waypoint
 
 No configuration on the products is done. This is just the vanilla install through the distri's package manager.
 
