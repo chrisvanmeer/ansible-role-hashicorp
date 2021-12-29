@@ -8,26 +8,8 @@
     gpgcheck: false
     enabled: true
 
-- name: "{{ ansible_distribution }} - Install Consul."
+- name: "{{ ansible_distribution }} - Ensuring .: {{ item }} :. is present."
   yum:
-    name: consul
+    name: "{{ item }}"
     state: present
-  when: '"consul" in hashicorp_product_selection'
-
-- name: "{{ ansible_distribution }} - Install Nomad."
-  yum:
-    name: nomad
-    state: present
-  when: '"nomad" in hashicorp_product_selection'
-
-- name: "{{ ansible_distribution }} - Install Terraform."
-  yum:
-    name: terraform
-    state: present
-  when: '"terraform" in hashicorp_product_selection'
-
-- name: "{{ ansible_distribution }} - Install Vault."
-  yum:
-    name: vault
-    state: present
-  when: '"vault" in hashicorp_product_selection'
+  loop: "{{ hashicorp_product_selection }}"

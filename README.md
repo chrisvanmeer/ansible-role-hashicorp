@@ -28,10 +28,14 @@ None.
       <td>hashicorp_product_selection</td>
       <td>
         <ul>
+          <li>boundary</li>
           <li>consul</li>
           <li>nomad</li>
+          <li>packer</li>
           <li>terraform</li>
+          <li>vagrant</li>
           <li>vault</li>
+          <li>waypoint</li>
         </ul>
       </td>
       <td>Allows for a subselection of products to be installed. Defaults to the whole suite.</td>
@@ -59,10 +63,14 @@ ansible-galaxy install chrisvanmeer.hashicorp
 
   vars:
     hashicorp_product_selection:
+      - boundary
       - consul
       - nomad
+      - packer
       - terraform
+      - vagrant
       - vault
+      - waypoint
 
   roles:
     - role: chrisvanmeer.hashicorp

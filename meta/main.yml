@@ -22,11 +22,15 @@ galaxy_info:
       versions:
         - all
   galaxy_tags:
-    - cloud
-    - hashicorp
-    - consul
-    - nomad
-    - terraform
-    - vault
+      - boundary
+      - cloud
+      - consul
+      - hashicorp
+      - nomad
+      - packer
+      - terraform
+      - vagrant
+      - vault
+      - waypoint
 
 allow_duplicates: true
