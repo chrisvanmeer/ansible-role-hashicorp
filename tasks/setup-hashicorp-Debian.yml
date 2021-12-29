@@ -14,7 +14,7 @@
     update_cache: true
     cache_valid_time: 3600
 
-- name: "{{ ansible_distribution }} - Ensuring .: {{ item }} :. is present."
+- name: "{{ ansible_distribution }} - Ensuring packages are present."
   apt:
     name: "{{ item }}"
     state: present
