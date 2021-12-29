@@ -11,7 +11,7 @@ No configuration on the products is done. This is just the vanilla install throu
 
 ## Requirements
 
-None.
+No special requirements.
 
 ## Role Variables
 
@@ -45,7 +45,7 @@ None.
 
 ## Dependencies
 
-None.
+No dependencies.
 
 ## Installation
 
