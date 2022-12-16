@@ -9,6 +9,5 @@
 
 - name: "{{ ansible_distribution }} - Ensuring packages are present."
   dnf:
-    name: "{{ item }}"
+    name: "{{ hashicorp_product_selection }}"
     state: present
-  loop: "{{ hashicorp_product_selection }}"
