@@ -1,16 +1,13 @@
 ---
-- name: "{{ ansible_distribution }} - Set architecture fact."
-  set_fact:
-    dpkg_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"
-
 - name: "{{ ansible_distribution }} - Ensure Hashicorp signing key is present."
   apt_key:
     url: https://apt.releases.hashicorp.com/gpg
+    keyring: /usr/share/keyrings/hashicorp-archive-keyring.gpg
     state: present
 
 - name: "{{ ansible_distribution }} - Ensure Hashicorp repository is present."
   apt_repository:
-    repo: "deb [arch={{ dpkg_arch }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
     state: present
 
 - name: "{{ ansible_distribution }} - Ensure apt is updated."
