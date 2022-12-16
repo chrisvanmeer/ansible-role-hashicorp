@@ -1,21 +1,20 @@
 ---
-- name: "{{ ansible_distribution }} - Ensure that Hashicorp signing key is present."
+- name: "{{ ansible_distribution }} - Ensure Hashicorp signing key is present."
   apt_key:
     url: https://apt.releases.hashicorp.com/gpg
     state: present
 
-- name: "{{ ansible_distribution }} - Ensure that Hashicorp repository is present."
+- name: "{{ ansible_distribution }} - Ensure Hashicorp repository is present."
   apt_repository:
-    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    repo: "deb [arch={{ ansible_architecture }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
     state: present
 
-- name: "{{ ansible_distribution }} - Ensure that apt is updated."
+- name: "{{ ansible_distribution }} - Ensure apt is updated."
   apt:
     update_cache: true
     cache_valid_time: 3600
 
-- name: "{{ ansible_distribution }} - Ensuring packages are present."
+- name: "{{ ansible_distribution }} - Ensure packages are present."
   apt:
-    name: "{{ item }}"
+    name: "{{ hashicorp_product_selection }}"
     state: present
-  loop: "{{ hashicorp_product_selection }}"
