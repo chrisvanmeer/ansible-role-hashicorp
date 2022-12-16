@@ -1,5 +1,5 @@
 ---
-- name: "{{ ansible_distribution }} - Ensure that Hashicorp repository is present."
+- name: "{{ ansible_distribution }} - Ensure Hashicorp repository is present."
   yum_repository:
     name: HashiCorp
     description: HashiCorp Repository
@@ -7,7 +7,7 @@
     gpgcheck: false
     enabled: true
 
-- name: "{{ ansible_distribution }} - Ensuring packages are present."
+- name: "{{ ansible_distribution }} - Ensure packages are present."
   dnf:
     name: "{{ hashicorp_product_selection }}"
     state: present
