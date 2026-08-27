@@ -38,13 +38,21 @@
     state: absent
 
 - name: "Ensure the HashiCorp APT repository is present."
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb [arch={{ 'amd64' if ansible_facts.architecture == 'x86_64' else ansible_facts.architecture }}
-      signed-by={{ hashicorp_apt_keyring_path }}]
-      https://apt.releases.hashicorp.com {{ ansible_facts.distribution_release }} main
+  ansible.builtin.deb822_repository:
+    name: hashicorp
+    types:
+      - deb
+    uris:
+      - https://apt.releases.hashicorp.com
+    suites:
+      - "{{ ansible_facts.distribution_release }}"
+    components:
+      - main
+    architectures:
+      - "{{ 'amd64' if ansible_facts.architecture == 'x86_64' else ansible_facts.architecture }}"
+    signed_by: "{{ hashicorp_apt_keyring_path }}"
     state: present
-    filename: hashicorp
+    enabled: true
     update_cache: true
 
 - name: "Ensure requested HashiCorp packages are present."
