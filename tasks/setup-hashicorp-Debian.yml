@@ -53,6 +53,9 @@
     signed_by: "{{ hashicorp_apt_keyring_path }}"
     state: present
     enabled: true
+
+- name: "Update APT cache after adding HashiCorp repository."
+  ansible.builtin.apt:
     update_cache: true
 
 - name: "Ensure requested HashiCorp packages are present."
