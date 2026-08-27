@@ -1,0 +1,3 @@
+---
+# Loaded for the RedHat family (RHEL, CentOS, Rocky Linux, AlmaLinux, ...).
+hashicorp_task_file: setup-hashicorp-RedHat.yml

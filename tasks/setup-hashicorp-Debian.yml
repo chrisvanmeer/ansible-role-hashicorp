@@ -1,21 +1,56 @@
 ---
-- name: "Ensure Hashicorp signing key is present."
-  ansible.builtin.apt_key:
-    url: https://apt.releases.hashicorp.com/gpg
-    keyring: /usr/share/keyrings/hashicorp-archive-keyring.gpg
-    state: present
-
-- name: "Ensure Hashicorp repository is present."
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
-    state: present
-
-- name: "Ensure apt is updated."
+- name: "Ensure prerequisite packages are present."
   ansible.builtin.apt:
+    name:
+      - gnupg
+      - ca-certificates
+    state: present
     update_cache: true
     cache_valid_time: 3600
 
-- name: "Ensure packages are present."
-  ansible.builtin.apt:
-    name: "{{ hashicorp_product_selection }}"
+- name: "Ensure the APT keyring directory exists."
+  ansible.builtin.file:
+    path: "{{ hashicorp_apt_keyring_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: "Ensure the HashiCorp GPG key is downloaded."
+  ansible.builtin.get_url:
+    url: "{{ hashicorp_gpg_key_url }}"
+    dest: /tmp/hashicorp-archive-keyring.asc
+    mode: "0644"
+  register: hashicorp_gpg_download
+
+- name: "Ensure the HashiCorp GPG key is de-armored into the keyring."  # noqa: no-handler
+  ansible.builtin.command:
+    cmd: >-
+      gpg --batch --yes --dearmor
+      --output {{ hashicorp_apt_keyring_path }}
+      /tmp/hashicorp-archive-keyring.asc
+  when: hashicorp_gpg_download is changed
+  changed_when: true
+
+- name: "Ensure the temporary GPG key file is removed."
+  ansible.builtin.file:
+    path: /tmp/hashicorp-archive-keyring.asc
+    state: absent
+
+- name: "Ensure the HashiCorp APT repository is present."
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ 'amd64' if ansible_facts.architecture == 'x86_64' else ansible_facts.architecture }}
+      signed-by={{ hashicorp_apt_keyring_path }}]
+      https://apt.releases.hashicorp.com {{ ansible_facts.distribution_release }} main
     state: present
+    filename: hashicorp
+    update_cache: true
+
+- name: "Ensure requested HashiCorp packages are present."
+  ansible.builtin.apt:
+    name: "{{ item.name }}{{ ('=' ~ item.version ~ '*') if item.version | default('latest') != 'latest' else '' }}"
+    state: present
+  loop: "{{ hashicorp_products }}"
+  loop_control:
+    label: "{{ item.name }}{{ (' (' ~ item.version ~ ')') if item.version is defined else '' }}"

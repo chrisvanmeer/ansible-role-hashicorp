@@ -1,0 +1,11 @@
+---
+profile: production
+
+exclude_paths:
+  - .github/
+  - .yamllint
+  - README.md
+
+use_default_rules: true
+
+skip_list: []

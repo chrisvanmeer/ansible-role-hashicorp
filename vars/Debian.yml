@@ -1,0 +1,3 @@
+---
+# Loaded for the Debian family (Debian, Ubuntu, ...).
+hashicorp_task_file: setup-hashicorp-Debian.yml

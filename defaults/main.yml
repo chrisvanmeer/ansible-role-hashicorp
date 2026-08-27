@@ -1,11 +1,32 @@
 ---
-# defaults file for chrisvanmeer.hashicorp-role
-hashicorp_product_selection:
-  - boundary
-  - consul
-  - nomad
-  - packer
-  - terraform
-  - vagrant
-  - vault
-  - waypoint
+# defaults file for chrisvanmeer.hashicorp
+
+# List of HashiCorp products to install. Empty by default: nothing is
+# installed unless explicitly requested.
+#
+# Each item is a dict with:
+#   name:    (required) One of the supported HashiCorp products. See
+#            `hashicorp_supported_products` in vars/main.yml for the full list.
+#   version: (optional) The exact upstream version to install, e.g. "1.7.5".
+#            When omitted (or set to "latest"), the latest available
+#            version is installed.
+#
+# Example:
+#
+# hashicorp_products:
+#   - name: terraform
+#     version: "1.7.5"
+#   - name: vault
+#     version: "1.15.6"
+#   - name: consul
+hashicorp_products: []
+
+# Directory used to store the de-armored HashiCorp GPG keyring on
+# APT-based systems.
+hashicorp_apt_keyring_dir: /usr/share/keyrings
+
+# Path to the de-armored HashiCorp GPG keyring on APT-based systems.
+hashicorp_apt_keyring_path: "{{ hashicorp_apt_keyring_dir }}/hashicorp-archive-keyring.gpg"
+
+# URL of the HashiCorp APT/RPM GPG signing key.
+hashicorp_gpg_key_url: https://apt.releases.hashicorp.com/gpg

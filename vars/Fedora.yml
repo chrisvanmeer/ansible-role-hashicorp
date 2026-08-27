@@ -1,0 +1,4 @@
+---
+# Loaded specifically for Fedora, which ships its own repository path
+# and is therefore matched before the generic RedHat os_family file.
+hashicorp_task_file: setup-hashicorp-Fedora.yml

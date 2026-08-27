@@ -1,4 +1,51 @@
 ---
-# tasks file for chrisvanmeer.hashicorp-role
-- name: Include right OS task file.
+# tasks file for chrisvanmeer.hashicorp
+
+- name: "Assert that hashicorp_products is a list."
+  ansible.builtin.assert:
+    that:
+      - hashicorp_products is sequence
+      - hashicorp_products is not string
+    fail_msg: "hashicorp_products must be a list of dicts, e.g. [{ name: terraform }]."
+    quiet: true
+
+- name: "Assert that every requested product is supported."
+  ansible.builtin.assert:
+    that:
+      - item.name is defined
+      - item.name in hashicorp_supported_products
+    fail_msg: >-
+      "{{ item.name | default('(missing name)') }}" is not a supported HashiCorp product.
+      Supported products: {{ hashicorp_supported_products | join(', ') }}.
+    quiet: true
+  loop: "{{ hashicorp_products }}"
+  loop_control:
+    label: "{{ item.name | default('(missing name)') }}"
+
+- name: "Determine the OS-specific variable file to load."
+  ansible.builtin.set_fact:
+    hashicorp_vars_file: >-
+      {{ lookup('ansible.builtin.first_found', hashicorp_vars_file_candidates, errors='ignore') | default('', true) }}
+  vars:
+    hashicorp_vars_file_candidates:
+      files:
+        - "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_major_version }}.yml"
+        - "{{ ansible_facts.distribution }}.yml"
+        - "{{ ansible_facts.os_family }}.yml"
+      paths:
+        - "vars"
+
+- name: "Fail on unsupported operating systems."
+  ansible.builtin.fail:
+    msg: >-
+      chrisvanmeer.hashicorp does not support {{ ansible_facts.distribution }}
+      {{ ansible_facts.distribution_version }}. Supported families are
+      Debian, Ubuntu, Fedora and EL (RHEL, CentOS, Rocky Linux, AlmaLinux).
+  when: hashicorp_vars_file | length == 0
+
+- name: "Include the OS-specific variables."
+  ansible.builtin.include_vars: "{{ hashicorp_vars_file }}"
+
+- name: "Include the OS-specific installation tasks."
   ansible.builtin.include_tasks: "{{ hashicorp_task_file }}"
+  when: hashicorp_products | length > 0
