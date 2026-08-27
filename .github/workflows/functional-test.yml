@@ -19,7 +19,7 @@ jobs:
           - name: "Ubuntu 26.04"
             image: "ubuntu:26.04"
             family: debian
-          - name: "Debian 13 (Trixie)"
+          - name: "Debian 13"
             image: "debian:13"
             family: debian
           - name: "Fedora 44"
