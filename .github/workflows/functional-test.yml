@@ -1,0 +1,69 @@
+---
+name: Functional test
+
+"on":
+  push:
+  workflow_dispatch:
+
+jobs:
+  run-example-playbook:
+    name: "${{ matrix.name }}"
+    runs-on: ubuntu-latest
+    container:
+      image: "${{ matrix.image }}"
+      options: --cap-add=IPC_LOCK
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: "Ubuntu 26.04"
+            image: "ubuntu:26.04"
+            family: debian
+          - name: "Debian 13"
+            image: "debian:13"
+            family: debian
+          - name: "Fedora 44"
+            image: "fedora:44"
+            family: redhat
+          - name: "Rocky Linux 10"
+            image: "rockylinux/rockylinux:10"
+            family: redhat
+          - name: "AlmaLinux 10"
+            image: "almalinux:10"
+            family: redhat
+
+    steps:
+      - name: Check out the role
+        uses: actions/checkout@v7
+        with:
+          path: roles/chrisvanmeer.hashicorp
+
+      - name: Install Ansible (Debian/Ubuntu)
+        if: matrix.family == 'debian'
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3 python3-pip python3-apt ca-certificates curl gnupg
+          pip3 install --break-system-packages ansible-core || pip3 install ansible-core
+
+      - name: Install Ansible (Fedora/EL)
+        if: matrix.family == 'redhat'
+        run: |
+          dnf install -y python3 python3-pip ca-certificates curl which
+          pip3 install ansible-core
+
+      - name: Run the example playbook from the README
+        env:
+          ANSIBLE_ROLES_PATH: "${{ github.workspace }}/roles"
+        run: >-
+          ansible-playbook roles/chrisvanmeer.hashicorp/tests/test.yml
+          --inventory localhost,
+          --connection local
+          --extra-vars ansible_become=false
+          -v
+
+      - name: Verify the requested products were actually installed
+        run: |
+          set -euo pipefail
+          terraform version | grep -F "1.15.8"
+          vault version | grep -F "2.0.4"
+          consul version | grep -F "2.0.3"

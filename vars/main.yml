@@ -1,3 +1,13 @@
 ---
-# vars file for chrisvanmeer.hashicorp-role
-hashicorp_task_file: "setup-hashicorp-{{ ansible_distribution }}.yml"
+# vars file for chrisvanmeer.hashicorp
+
+# The full set of HashiCorp products this role knows how to install.
+# Used to validate `hashicorp_products` before doing anything else.
+hashicorp_supported_products:
+  - boundary
+  - consul
+  - nomad
+  - packer
+  - terraform
+  - vagrant
+  - vault
