@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: "${{ matrix.image }}"
+      options: --cap-add=IPC_LOCK
     strategy:
       fail-fast: false
       matrix:
@@ -25,7 +26,7 @@ jobs:
             image: "fedora:44"
             family: redhat
           - name: "Rocky Linux 10"
-            image: "rockylinux:10"
+            image: "rockylinux/rockylinux:10"
             family: redhat
           - name: "AlmaLinux 10"
             image: "almalinux:10"
